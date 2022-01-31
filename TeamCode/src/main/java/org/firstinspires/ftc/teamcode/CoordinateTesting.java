@@ -7,29 +7,23 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "AutoTest")
-public class AutoTesting extends LinearOpMode {
+@Autonomous(name = "CoordinateTesting")
+public class CoordinateTesting extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Pose2d startPose = new Pose2d(0,0,0);
+        Pose2d startPose = new Pose2d(0,0);
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setPoseEstimate(startPose);
 
-        //Should have robot move up 40 inches
-        Trajectory moveForward = drive.trajectoryBuilder(startPose)
-                .forward(40)
+        //Should have robot move up 40 to position (40,0)
+        Trajectory testCoordinate = drive.trajectoryBuilder(startPose)
+                .strafeTo(new Vector2d(40, 0))
                 .build();
 
-        //Should have robot move back to starting position
-        Trajectory strafeToStart = drive.trajectoryBuilder(moveForward.end())
-                .strafeTo(new Vector2d(0,0))
-                .build();
-
-        drive.followTrajectory(moveForward);
-        drive.followTrajectory(strafeToStart);
+        drive.followTrajectory(testCoordinate);
     }
 }
