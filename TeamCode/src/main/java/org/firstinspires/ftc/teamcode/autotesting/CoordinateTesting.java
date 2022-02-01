@@ -24,6 +24,11 @@ public class CoordinateTesting extends LinearOpMode {
                 .strafeTo(new Vector2d(40, 0))
                 .build();
 
+        Trajectory testCordNewPosition = drive.trajectoryBuilder(testCoordinate.end())
+                .strafeTo(new Vector2d(40, 20))
+                .build();
+
         drive.followTrajectory(testCoordinate);
+        drive.followTrajectory(testCordNewPosition);
     }
 }
