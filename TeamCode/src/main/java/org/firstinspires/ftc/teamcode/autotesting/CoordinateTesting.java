@@ -26,7 +26,7 @@ public class CoordinateTesting extends LinearOpMode {
 
         //Should have robot move right 20 to position (40,20)
         Trajectory testCordNewPosition = drive.trajectoryBuilder(testCoordinate.end())
-                .strafeTo(new Vector2d(40, 20))
+                .strafeTo(new Vector2d(40, -20))
                 .build();
 
         drive.followTrajectory(testCoordinate);

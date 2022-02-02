@@ -19,9 +19,9 @@ public class AutoTesting extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
-        //Should have robot move up 40 inches
+        //Should have robot move up 20 inches
         Trajectory moveForward = drive.trajectoryBuilder(startPose)
-                .forward(40)
+                .forward(20)
                 .build();
 
         //Should have robot move back to starting position
