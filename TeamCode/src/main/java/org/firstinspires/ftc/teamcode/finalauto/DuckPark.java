@@ -39,7 +39,7 @@ public class DuckPark extends LinearOpMode {
                 .build();
 
         Trajectory warehouse_3 = drive.trajectoryBuilder(warehouse_2.end())
-                .forward(40)
+                .forward(42)
                 .build();
 
 
