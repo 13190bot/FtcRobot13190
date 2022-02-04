@@ -34,6 +34,11 @@ public class DuckPark extends LinearOpMode {
                 .forward(85)
                 .build();
 
+        //Potential Idea if the code afterward doesn't work
+        Trajectory warehouse_v2 = drive.trajectoryBuilder(warehouse.end())
+                .strafeTo(new Vector2d(15, 90))
+                .build();
+
         Trajectory warehouse_2 = drive.trajectoryBuilder(warehouse.end())
                 .strafeLeft(35)
                 .build();
@@ -50,6 +55,7 @@ public class DuckPark extends LinearOpMode {
         sleep(4000);
         duckMotor.setPower(0);
         drive.followTrajectory(warehouse);
+        //drive.followTrajectory(warehouse_v2);
         drive.followTrajectory(warehouse_2);
         drive.followTrajectory(warehouse_3);
     }
