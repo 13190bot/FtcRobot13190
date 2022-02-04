@@ -20,7 +20,7 @@ public class ShipHubDuckPark extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(30, 10, Math.toRadians(107)))
+                .lineToLinearHeading(new Pose2d(40, 10, Math.toRadians(107)))
                 .build();
 
         Trajectory duck = drive.trajectoryBuilder(shippingHub.end())
