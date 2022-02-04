@@ -20,7 +20,7 @@ public class FinalTeleOp extends template {
         frontRightMotor = hardwareMap.dcMotor.get("rightFront");
         rearRightMotor = hardwareMap.dcMotor.get("rightRear");
         duckMotor = hardwareMap.dcMotor.get("duckMotor");
-        limit = hardwareMap.touchSensor.get("limit");
+        limit = hardwareMap.touchSensor.get("limit"); // why are we initialising a touch sensor that does not exist?
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
