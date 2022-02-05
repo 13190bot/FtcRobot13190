@@ -28,7 +28,7 @@ public class ShipHubDuckPark extends LinearOpMode {
                 .build();
 
         Trajectory warehouse = drive.trajectoryBuilder(duck.end())
-                .forward(82)
+                .forward(77)
                 .build();
 
         Trajectory warehouse_2 = drive.trajectoryBuilder(warehouse.end())
