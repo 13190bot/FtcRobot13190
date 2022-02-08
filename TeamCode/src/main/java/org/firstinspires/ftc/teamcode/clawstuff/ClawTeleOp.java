@@ -20,10 +20,11 @@ public class ClawTeleOp extends template {
         waitForStart();
 
         while (opModeIsActive()) {
-            telemetry.addData("rotationPosition", (armRotationMotor.getCurrentPosition()*360)/(537.7*6));
+            telemetry.addData("rotationPosition", (armRotationMotor.getCurrentPosition()*360)/(COUNTS_PER_MOTOR_REV*GEAR_CHANGE));
             telemetry.addData("intakeMotorPower", intakeMotor.getPower());
             telemetry.addData("limitSwitch", limit.isPressed());
             telemetry.addData("servoPos", directionServo.getPosition());
+            telemetry.addData("armPower", armRotationMotor.getPower());
             if(limit.isPressed()){
                 rotationPower = 0;
                 telemetry.addData("ERROR: ", "too far");
@@ -75,6 +76,9 @@ public class ClawTeleOp extends template {
             }
             if(servoInput<-0.2){
                 directionServo.setPosition(directionServo.getPosition()-0.01);
+            }
+            if(gamepad2.dpad_down){
+                armRotationMotor.setTargetPosition(armRotationMotor.getCurrentPosition());
             }
             telemetry.update();
         }
