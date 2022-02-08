@@ -65,37 +65,29 @@ public abstract class template extends LinearOpMode {
     }
 
     public void controlMotorPower(){
-        Thread powerControl = new Thread(new Runnable(){
-            @Override
-            public void run(){
-                while(opModeIsActive()){
-                    double position = armRotationMotor.getCurrentPosition()*360/(COUNTS_PER_MOTOR_REV*GEAR_CHANGE);
-                    telemetry.addData("rotationPos", position);
-                    if(position <= 40 && position >= 0 && rotationPower>0){
-                        armRotationMotor.setPower(rotationPower*0.9);
-                    }else if(position <=70 && position>40 && rotationPower>0){
-                        armRotationMotor.setPower(rotationPower*0.7);
-                    }else if(position <=110 && position>70 && rotationPower>0){
-                        armRotationMotor.setPower(rotationPower*0.5);
-                    }else if(position <=140 && position>110 && rotationPower>0){
-                        armRotationMotor.setPower(rotationPower*0.3);
-                    }else if(position <= 180 && position>140 && rotationPower>0) {
+        double position = armRotationMotor.getCurrentPosition()*360/(COUNTS_PER_MOTOR_REV*GEAR_CHANGE);
+        telemetry.addData("rotationPos", position);
+        if(position <= 40 && position >= 0 && rotationPower>0){
+            armRotationMotor.setPower(rotationPower*0.9);
+        }else if(position <=70 && position>40 && rotationPower>0){
+            armRotationMotor.setPower(rotationPower*0.7);
+        }else if(position <=110 && position>70 && rotationPower>0){
+            armRotationMotor.setPower(rotationPower*0.5);
+        }else if(position <=140 && position>110 && rotationPower>0){
+            armRotationMotor.setPower(rotationPower*0.3);
+        }else if(position <= 180 && position>140 && rotationPower>0) {
                         armRotationMotor.setPower(rotationPower * 0.2);
-                    }else if(position <= 40 && position >= 0 && rotationPower<0){
-                        armRotationMotor.setPower(rotationPower*0.2);
-                    }else if(position <=70 && position>40 && rotationPower<0){
-                        armRotationMotor.setPower(rotationPower*0.3);
-                    }else if(position <=110 && position>70 && rotationPower<0){
-                        armRotationMotor.setPower(rotationPower*0.5);
-                    }else if(position <=140 && position>110 && rotationPower<0){
-                        armRotationMotor.setPower(rotationPower*0.7);
-                    }else if(position <= 180 && position>140 && rotationPower<0){
-                        armRotationMotor.setPower(rotationPower*0.9);
-                    }
-                }
-            }
-        });
-        powerControl.start();
+        }else if(position <= 40 && position >= 0 && rotationPower<0){
+            armRotationMotor.setPower(rotationPower*0.2);
+        }else if(position <=70 && position>40 && rotationPower<0){
+            armRotationMotor.setPower(rotationPower*0.3);
+        }else if(position <=110 && position>70 && rotationPower<0){
+            armRotationMotor.setPower(rotationPower*0.5);
+        }else if(position <=140 && position>110 && rotationPower<0){
+            armRotationMotor.setPower(rotationPower*0.7);
+        }else if(position <= 180 && position>140 && rotationPower<0){
+            armRotationMotor.setPower(rotationPower*0.9);
+        }
     }
     private void moveThings(double targetAngle) {
         int targetPosition = (int) (targetAngle * COUNTS_PER_MOTOR_REV * GEAR_CHANGE) / 360;

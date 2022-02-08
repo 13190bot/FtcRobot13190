@@ -16,7 +16,6 @@ public class ClawTeleOp extends template {
         limit = hardwareMap.get(TouchSensor.class, "limit");
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-        controlMotorPower();
         waitForStart();
 
         while (opModeIsActive()) {
@@ -80,6 +79,7 @@ public class ClawTeleOp extends template {
             if(gamepad2.dpad_down){
                 armRotationMotor.setTargetPosition(armRotationMotor.getCurrentPosition());
             }
+            controlMotorPower();
             telemetry.update();
         }
     }
