@@ -52,7 +52,7 @@ public class DuckPark extends LinearOpMode {
         drive.followTrajectory(forward);
         drive.followTrajectory(duck);
         duckMotor.setPower(0.5);
-        sleep(4000);
+        sleep(3000);
         duckMotor.setPower(0);
         drive.followTrajectory(warehouse);
         //drive.followTrajectory(warehouse_v2);
