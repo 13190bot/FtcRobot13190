@@ -16,8 +16,7 @@ import java.util.List;
 public class DuckLeftMiddle extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
-            "Duck",
-            "Marker"
+            "Duck"
     };
 
     private static final String VUFORIA_KEY =
