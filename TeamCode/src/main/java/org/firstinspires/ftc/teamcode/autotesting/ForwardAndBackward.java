@@ -19,11 +19,11 @@ public class ForwardAndBackward extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory forward = drive.trajectoryBuilder(startPose)
-                .forward(50)
+                .forward(55)
                 .build();
 
         Trajectory backward = drive.trajectoryBuilder(forward.end())
-                .back(50)
+                .back(55)
                 .build();
 
         while (true) {
