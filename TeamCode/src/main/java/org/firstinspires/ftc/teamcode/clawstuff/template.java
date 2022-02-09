@@ -19,7 +19,6 @@ public abstract class template extends LinearOpMode {
         telemetry.addData("Status", "Initializing Arm Motors");
         telemetry.update();
         armRotationMotor = hardwareMap.get(DcMotor.class, "rotationMotor");
-        armRotationMotor.setDirection(DcMotor.Direction.REVERSE);
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -47,19 +46,19 @@ public abstract class template extends LinearOpMode {
     }
 
     public void toBottomLevel() {
-        double targetAngle = 155;
+        double targetAngle = 170;
         moveThings(targetAngle);
         directionServo.setPosition(0.3);
     }
 
     public void toMiddleLevel() {
-        double targetAngle = 130;
+        double targetAngle = 140;
         moveThings(targetAngle);
         directionServo.setPosition(0.33);
     }
 
     public void toTopLevel() {
-        double targetAngle = 95;
+        double targetAngle = 110;
         moveThings(targetAngle);
         directionServo.setPosition(0.51);
     }
@@ -68,25 +67,27 @@ public abstract class template extends LinearOpMode {
         double position = armRotationMotor.getCurrentPosition()*360/(COUNTS_PER_MOTOR_REV*GEAR_CHANGE);
         telemetry.addData("rotationPos", position);
         if(position <= 40 && position >= 0 && rotationPower>0){
-            armRotationMotor.setPower(rotationPower*0.9);
+            armRotationMotor.setPower(rotationPower*0.6);
         }else if(position <=70 && position>40 && rotationPower>0){
-            armRotationMotor.setPower(rotationPower*0.7);
+            armRotationMotor.setPower(rotationPower*0.5);
         }else if(position <=110 && position>70 && rotationPower>0){
-            armRotationMotor.setPower(rotationPower*0.5);
+            armRotationMotor.setPower(rotationPower*0.4);
         }else if(position <=140 && position>110 && rotationPower>0){
-            armRotationMotor.setPower(rotationPower*0.3);
+            armRotationMotor.setPower(rotationPower*0.35);
         }else if(position <= 180 && position>140 && rotationPower>0) {
-                        armRotationMotor.setPower(rotationPower * 0.2);
+            armRotationMotor.setPower(rotationPower * 0.3);
         }else if(position <= 40 && position >= 0 && rotationPower<0){
-            armRotationMotor.setPower(rotationPower*0.2);
-        }else if(position <=70 && position>40 && rotationPower<0){
             armRotationMotor.setPower(rotationPower*0.3);
+        }else if(position <=70 && position>40 && rotationPower<0){
+            armRotationMotor.setPower(rotationPower*0.35);
         }else if(position <=110 && position>70 && rotationPower<0){
-            armRotationMotor.setPower(rotationPower*0.5);
+            armRotationMotor.setPower(rotationPower*0.4);
         }else if(position <=140 && position>110 && rotationPower<0){
-            armRotationMotor.setPower(rotationPower*0.7);
+            armRotationMotor.setPower(rotationPower*0.5);
         }else if(position <= 180 && position>140 && rotationPower<0){
-            armRotationMotor.setPower(rotationPower*0.9);
+            armRotationMotor.setPower(rotationPower*0.6);
+        }else{
+            armRotationMotor.setPower(rotationPower*0.5);
         }
     }
     private void moveThings(double targetAngle) {
