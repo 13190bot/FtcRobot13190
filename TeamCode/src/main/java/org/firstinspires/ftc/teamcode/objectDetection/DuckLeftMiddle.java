@@ -16,7 +16,8 @@ import java.util.List;
 public class DuckLeftMiddle extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
-            "Duck"
+            "Duck",
+            "Marker"
     };
 
     private static final String VUFORIA_KEY =
@@ -50,13 +51,19 @@ public class DuckLeftMiddle extends LinearOpMode {
                                     recognition.getLeft(), recognition.getTop());
                             telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                     recognition.getRight(), recognition.getBottom());
+
                             if (recognition.getLeft() < 200) {
-                                telemetry.addData(recognition.getLabel(), " Position: Level 1");
+                                if (recognition.getLabel().equals("Duck")) {
+                                    telemetry.addData(recognition.getLabel(), " Position: Level 1");
+                                }
                             } else if (recognition.getLeft() < 530) {
-                                telemetry.addData(recognition.getLabel(), " Position: Level 2");
+                                if (recognition.getLabel().equals("Duck")) {
+                                    telemetry.addData(recognition.getLabel(), " Position: Level 2");
+                                }
                             } else {
                                 telemetry.addData("No detection", "Level 3");
                             }
+
                             i++;
                         }
                         telemetry.update();

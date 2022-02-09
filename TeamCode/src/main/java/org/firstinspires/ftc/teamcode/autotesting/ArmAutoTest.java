@@ -25,6 +25,7 @@ public class ArmAutoTest extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         armRotationMotor = hardwareMap.get(DcMotor.class, "rotationMotor");
         armRotationMotor.setDirection(DcMotor.Direction.REVERSE);
+        armRotationMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         directionServo = hardwareMap.get(Servo.class, "directionServo");
@@ -33,11 +34,12 @@ public class ArmAutoTest extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
-        armRotationMotor.setTargetPosition(1);
-        sleep(1000);
-        armRotationMotor.setTargetPosition(0);
-
-
+        armRotationMotor.setTargetPosition(armRotationMotor.getCurrentPosition()+190*7);
+        armRotationMotor.setPower(0.5);
+        while(armRotationMotor.isBusy()){
+            continue;
+        }
+        armRotationMotor.setPower(0);
 
 
     }
