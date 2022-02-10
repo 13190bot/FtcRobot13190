@@ -31,7 +31,7 @@ public class ShippingHubArmAuto extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(40, -10, 108))
+                .lineToLinearHeading(new Pose2d(40, -15, 108))
                 .build();
 
         drive.followTrajectory(shippingHub);
