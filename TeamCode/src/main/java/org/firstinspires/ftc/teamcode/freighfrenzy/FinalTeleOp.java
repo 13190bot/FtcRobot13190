@@ -21,7 +21,6 @@ public class FinalTeleOp extends template {
         frontRightMotor = hardwareMap.dcMotor.get("rightFront");
         rearRightMotor = hardwareMap.dcMotor.get("rightRear");
         duckMotor = hardwareMap.dcMotor.get("duckMotor");
-        limit = hardwareMap.touchSensor.get("limit"); // why are we initialising a touch sensor that does not exist?
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
@@ -39,14 +38,13 @@ public class FinalTeleOp extends template {
             drive.setWeightedDrivePower(new Pose2d(vertical, horizontal, angle)); // in roadrunner x is vertical and y is horizontal
             drive.update();
 
-            if (this.gamepad1.left_bumper) {
-                duckMotor.setPower(-0.5);
-            } else {
-                duckMotor.setPower(0);
-            }
 
             if (this.gamepad1.right_trigger > 0.4) {
-                duckMotor.setPower(0.5);
+                double power = 0.5;
+                while(this.gamepad1.right_trigger > 0.4){
+                    power += 0.0025;
+                    duckMotor.setPower(power);
+                }
             } else {
                 duckMotor.setPower(0);
             }
@@ -56,18 +54,14 @@ public class FinalTeleOp extends template {
             telemetry.addData("FrontRightPower", frontRightMotor.getPower());
             telemetry.addData("BackRightPower", rearRightMotor.getPower());
 
+
             telemetry.addData("rotationPosition", armRotationMotor.getCurrentPosition());
             telemetry.addData("intakeMotorPower", intakeMotor.getPower());
-            telemetry.addData("limitSwitch", limit.isPressed());
             telemetry.addData("servoPos", directionServo.getPosition());
             telemetry.addData("armPower", armRotationMotor.getPower());
-            if (limit.isPressed()) {
-                armRotationMotor.setPower(0);
-                armRotationMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                armRotationMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                telemetry.addData("ERROR: ", "too far");
-            }
+
             if (gamepad2.right_trigger > 0.2) {
+                telemetry.addData("duckInput", true);
                 intakeMotor.setPower(1);
             } else if (gamepad2.left_trigger > 0.2) {
                 intakeMotor.setPower(-1);
@@ -77,13 +71,13 @@ public class FinalTeleOp extends template {
             double x = gamepad2.left_stick_x;
             telemetry.addData("arm almoa", x);
             if (armRotationMotor.getCurrentPosition() < 800 && x > 0) {
-                armRotationMotor.setPower(x * 0.35);
+                armRotationMotor.setPower(x * 0.5);
             } else if (armRotationMotor.getCurrentPosition() > 800 && x > 0) {
-                armRotationMotor.setPower(x * 0.5);
+                armRotationMotor.setPower(x * 0.75);
             } else if (armRotationMotor.getCurrentPosition() > 800 && x < 0) {
-                armRotationMotor.setPower(x * 0.35);
-            } else {
                 armRotationMotor.setPower(x * 0.5);
+            } else {
+                armRotationMotor.setPower(x * 0.75);
             }
 
             if (gamepad2.left_bumper) {
