@@ -55,7 +55,7 @@ public class FinalTeleOp extends template {
             telemetry.addData("BackRightPower", rearRightMotor.getPower());
 
 
-            telemetry.addData("rotationPosition", armRotationMotor.getCurrentPosition());
+            telemetry.addData("rotationPosition", armEncoder.getCurrentPosition());
             telemetry.addData("intakeMotorPower", intakeMotor.getPower());
             telemetry.addData("servoPos", directionServo.getPosition());
             telemetry.addData("armPower", armRotationMotor.getPower());
@@ -81,8 +81,8 @@ public class FinalTeleOp extends template {
             }
 
             if (gamepad2.left_bumper) {
-                armRotationMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                armRotationMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                armEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                armEncoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
             double servoInput = gamepad2.right_stick_x;
             if (servoInput > 0.2 && directionServo.getPosition() < MAX_POSITION) {

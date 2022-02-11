@@ -3,15 +3,18 @@ package org.firstinspires.ftc.teamcode.clawstuff;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 
 public abstract class template extends LinearOpMode {
 
-    static final double COUNTS_PER_MOTOR_REV = 1992.6;
+    static final double COUNTS_PER_MOTOR_REV = 8192;
     static final double GEAR_CHANGE = 6.0;
 
     public DcMotor armRotationMotor;
     public DcMotor intakeMotor;
+    public DcMotor armEncoder;
     public Servo directionServo;
+    public double targetPosition = -1;
     public boolean manual = false;
     public double rotationPower = 0;
 
@@ -24,6 +27,8 @@ public abstract class template extends LinearOpMode {
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         directionServo = hardwareMap.get(Servo.class, "directionServo");
+
+        armEncoder = hardwareMap.get(DcMotor.class, "armEncoder");
     }
 
     public boolean isRotationBusy() {
