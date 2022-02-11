@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 
@@ -36,6 +37,7 @@ public class ArmAutoTest extends LinearOpMode {
 
         armRotationMotor.setTargetPosition(armRotationMotor.getCurrentPosition()+190*7);
         armRotationMotor.setPower(0.5);
+        telemetry.addData("armRotationMotor Position: ", armRotationMotor.getCurrentPosition());
         while(armRotationMotor.isBusy()){
             continue;
         }
