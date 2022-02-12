@@ -27,7 +27,7 @@ public class DuckPark extends LinearOpMode {
                 .forward(40)
                 .build();
         Trajectory duck = drive.trajectoryBuilder(forward.end())
-                .lineToLinearHeading(new Pose2d(1, 27, Math.toRadians(-108)))
+                .lineToLinearHeading(new Pose2d(0, 27, Math.toRadians(-112)))
                 .build();
 
         Trajectory warehouse = drive.trajectoryBuilder(duck.end())
