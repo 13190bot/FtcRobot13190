@@ -8,12 +8,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "ShippingHubArmAuto")
-public class ShippingHubArmAuto extends LinearOpMode {
+@Autonomous(name = "ShipHubArmTest")
+public class ShippingHubArmAutoTest extends LinearOpMode {
 
     public DcMotor armRotationMotor;
     public DcMotor intakeMotor;
     public Servo directionServo;
+    public DcMotor armEncoder;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,28 +28,46 @@ public class ShippingHubArmAuto extends LinearOpMode {
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         directionServo = hardwareMap.get(Servo.class, "directionServo");
+        armEncoder = hardwareMap.get(DcMotor.class, "armEncoder");
+
 
         drive.setPoseEstimate(startPose);
 
         Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(40, -15, 108))
+                .lineToLinearHeading(new Pose2d(40, 0, 110))
                 .build();
 
         drive.followTrajectory(shippingHub);
-        //Arm moving up
-        armRotationMotor.setTargetPosition(armRotationMotor.getCurrentPosition()+190*7);
+
+        directionServo.setPosition(0.9);
+        double targetPosition = 2400;
+        boolean recheck = false;
+        while(armEncoder.getCurrentPosition() > targetPosition+20 || armEncoder.getCurrentPosition() < targetPosition-20){
+            if(recheck == true){
+                armRotationMotor.setPower(0);
+                recheck = false;
+            }else{
+                armRotationMotor.setPower(0);
+                sleep(500);
+                recheck = true;
+            }
+        }
+        else{
+            if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 400){
+                armRotationMotor.setPower(-0.75);
+            }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 400){
+                armRotationMotor.setPower(-0.25);
+            }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 400){
+                armRotationMotor.setPower(0.75);
+            }else{
+                armRotationMotor.setPower(0.25);
+            }
+        }
         armRotationMotor.setPower(0.5);
         while(armRotationMotor.isBusy()){
             continue;
         }
         armRotationMotor.setPower(0);
-        //Arm box thing getting in position
-        directionServo.setPosition(.50);
-        //Intake or output stuff
         intakeMotor.setPower(-1);
-        sleep(2000);
-        intakeMotor.setPower(0);
-
-
     }
 }

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+@Disabled
 @TeleOp
 public class ClawTeleOp extends template {
     public TouchSensor limit;
@@ -53,13 +54,13 @@ public class ClawTeleOp extends template {
             }
             double x = gamepad2.left_stick_x;
             if((x>0.2) && !isRotationBusy()){
-                manual = true;
+                //manual = true;
                 rotationPower = 1;
             }else if((x<-0.2)&&!isRotationBusy()){
-                manual = true;
+                //manual = true;
                 rotationPower = -1;
             }else{
-                manual = false;
+                //manual = false;
                 if(!isRotationBusy()){
                     rotationPower = 0;
                 }

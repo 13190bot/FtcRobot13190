@@ -14,8 +14,9 @@ public abstract class template extends LinearOpMode {
     public DcMotor intakeMotor;
     public DcMotor armEncoder;
     public Servo directionServo;
-    public double targetPosition = -1;
-    public boolean manual = false;
+    public double targetPosition;
+    public boolean armMoving = false;
+    public boolean recheck = false;
     public double rotationPower = 0;
 
     public void initialize() {
@@ -38,7 +39,7 @@ public abstract class template extends LinearOpMode {
             if (armRotationMotor.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
                 armRotationMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-            if (armRotationMotor.getPower() != 0 && !manual) {
+            if (armRotationMotor.getPower() != 0) {
                 rotationPower = 0;
             }
             return false;

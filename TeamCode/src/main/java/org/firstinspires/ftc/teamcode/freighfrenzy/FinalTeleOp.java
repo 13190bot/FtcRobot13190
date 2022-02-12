@@ -54,11 +54,10 @@ public class FinalTeleOp extends template {
             telemetry.addData("FrontRightPower", frontRightMotor.getPower());
             telemetry.addData("BackRightPower", rearRightMotor.getPower());
 
-
             telemetry.addData("rotationPosition", armEncoder.getCurrentPosition());
             telemetry.addData("intakeMotorPower", intakeMotor.getPower());
             telemetry.addData("servoPos", directionServo.getPosition());
-            telemetry.addData("armPower", armRotationMotor.getPower());
+            telemetry.addData("armMoving", armMoving);
 
             if (gamepad2.right_trigger > 0.2) {
                 telemetry.addData("duckInput", true);
@@ -68,16 +67,19 @@ public class FinalTeleOp extends template {
             } else {
                 intakeMotor.setPower(0);
             }
-            double x = gamepad2.left_stick_x;
-            telemetry.addData("arm almoa", x);
-            if (armRotationMotor.getCurrentPosition() < 800 && x > 0) {
-                armRotationMotor.setPower(x * 0.5);
-            } else if (armRotationMotor.getCurrentPosition() > 800 && x > 0) {
-                armRotationMotor.setPower(x * 0.75);
-            } else if (armRotationMotor.getCurrentPosition() > 800 && x < 0) {
-                armRotationMotor.setPower(x * 0.5);
-            } else {
-                armRotationMotor.setPower(x * 0.75);
+
+            if(!armMoving){
+                double x = gamepad2.left_stick_x;
+                telemetry.addData("arm almoa", x);
+                if (armRotationMotor.getCurrentPosition() < 800 && x > 0) {
+                    armRotationMotor.setPower(x * 0.5);
+                } else if (armRotationMotor.getCurrentPosition() > 800 && x > 0) {
+                    armRotationMotor.setPower(x * 0.75);
+                } else if (armRotationMotor.getCurrentPosition() > 800 && x < 0) {
+                    armRotationMotor.setPower(x * 0.5);
+                } else {
+                    armRotationMotor.setPower(x * 0.75);
+                }
             }
 
             if (gamepad2.left_bumper) {
@@ -90,6 +92,40 @@ public class FinalTeleOp extends template {
             }
             if (servoInput < -0.2 && directionServo.getPosition() > MIN_POSITION) {
                 directionServo.setPosition(directionServo.getPosition() - 0.02);
+            }
+            if(gamepad2.x){
+                targetPosition = 2400;
+                directionServo.setPosition(0.87);
+                armMoving = true;
+            }
+            if(gamepad2.a){
+                targetPosition = 0;
+                directionServo.setPosition(0.7);
+                armMoving = true;
+            }
+            if(armMoving == true){
+                if(armEncoder.getCurrentPosition() < targetPosition+20 && armEncoder.getCurrentPosition() > targetPosition-20){
+                    if(recheck == true){
+                        armMoving = false;
+                        armRotationMotor.setPower(0);
+                        recheck = false;
+                    }else{
+                        armRotationMotor.setPower(0);
+                        sleep(500);
+                        recheck = true;
+                    }
+                }
+                else{
+                    if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 400){
+                        armRotationMotor.setPower(-0.75);
+                    }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 400){
+                        armRotationMotor.setPower(-0.25);
+                    }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 400){
+                        armRotationMotor.setPower(0.75);
+                    }else{
+                        armRotationMotor.setPower(0.25);
+                    }
+                }
             }
             telemetry.update();
         }
