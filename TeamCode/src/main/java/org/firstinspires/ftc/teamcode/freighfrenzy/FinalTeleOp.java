@@ -103,9 +103,9 @@ public class FinalTeleOp extends template {
                 directionServo.setPosition(0.7);
                 armMoving = true;
             }
-            if(armMoving == true){
+            if(armMoving){
                 if(armEncoder.getCurrentPosition() < targetPosition+20 && armEncoder.getCurrentPosition() > targetPosition-20){
-                    if(recheck == true){
+                    if(recheck){
                         armMoving = false;
                         armRotationMotor.setPower(0);
                         recheck = false;
