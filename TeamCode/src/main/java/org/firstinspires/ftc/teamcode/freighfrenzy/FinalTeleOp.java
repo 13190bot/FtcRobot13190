@@ -21,7 +21,6 @@ public class FinalTeleOp extends template {
         frontRightMotor = hardwareMap.dcMotor.get("rightFront");
         rearRightMotor = hardwareMap.dcMotor.get("rightRear");
         duckMotor = hardwareMap.dcMotor.get("duckMotor");
-        limit = hardwareMap.touchSensor.get("limit"); // why are we initialising a touch sensor that does not exist?
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
@@ -39,14 +38,13 @@ public class FinalTeleOp extends template {
             drive.setWeightedDrivePower(new Pose2d(vertical, horizontal, angle)); // in roadrunner x is vertical and y is horizontal
             drive.update();
 
-            if (this.gamepad1.left_bumper) {
-                duckMotor.setPower(-0.5);
-            } else {
-                duckMotor.setPower(0);
-            }
 
             if (this.gamepad1.right_trigger > 0.4) {
-                duckMotor.setPower(0.5);
+                double power = 0.5;
+                while(this.gamepad1.right_trigger > 0.4){
+                    power += 0.0025;
+                    duckMotor.setPower(power);
+                }
             } else {
                 duckMotor.setPower(0);
             }
@@ -56,18 +54,13 @@ public class FinalTeleOp extends template {
             telemetry.addData("FrontRightPower", frontRightMotor.getPower());
             telemetry.addData("BackRightPower", rearRightMotor.getPower());
 
-            telemetry.addData("rotationPosition", armRotationMotor.getCurrentPosition());
+            telemetry.addData("rotationPosition", armEncoder.getCurrentPosition());
             telemetry.addData("intakeMotorPower", intakeMotor.getPower());
-            telemetry.addData("limitSwitch", limit.isPressed());
             telemetry.addData("servoPos", directionServo.getPosition());
-            telemetry.addData("armPower", armRotationMotor.getPower());
-            if (limit.isPressed()) {
-                armRotationMotor.setPower(0);
-                armRotationMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                armRotationMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                telemetry.addData("ERROR: ", "too far");
-            }
+            telemetry.addData("armMoving", armMoving);
+
             if (gamepad2.right_trigger > 0.2) {
+                telemetry.addData("duckInput", true);
                 intakeMotor.setPower(1);
             } else if (gamepad2.left_trigger > 0.2) {
                 intakeMotor.setPower(-1);
@@ -90,8 +83,8 @@ public class FinalTeleOp extends template {
             }
 
             if (gamepad2.left_bumper) {
-                armRotationMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                armRotationMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                armEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                armEncoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
             double servoInput = gamepad2.right_stick_x;
             if (servoInput > 0.2 && directionServo.getPosition() < MAX_POSITION) {
@@ -99,6 +92,40 @@ public class FinalTeleOp extends template {
             }
             if (servoInput < -0.2 && directionServo.getPosition() > MIN_POSITION) {
                 directionServo.setPosition(directionServo.getPosition() - 0.02);
+            }
+            if(gamepad2.x){
+                targetPosition = 2400;
+                directionServo.setPosition(1);
+                armMoving = true;
+            }
+            if(gamepad2.a){
+                targetPosition = 0;
+                directionServo.setPosition(0.7);
+                armMoving = true;
+            }
+            if(armMoving == true){
+                if(armEncoder.getCurrentPosition() < targetPosition+20 && armEncoder.getCurrentPosition() > targetPosition-20){
+                    if(recheck == true){
+                        armMoving = false;
+                        armRotationMotor.setPower(0);
+                        recheck = false;
+                    }else{
+                        armRotationMotor.setPower(0);
+                        sleep(500);
+                        recheck = true;
+                    }
+                }
+                else{
+                    if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 300){
+                        armRotationMotor.setPower(-1);
+                    }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
+                        armRotationMotor.setPower(-0.25);
+                    }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition >300){
+                        armRotationMotor.setPower(7);
+                    }else{
+                        armRotationMotor.setPower(0.25);
+                    }
+                }
             }
             telemetry.update();
         }
