@@ -54,7 +54,12 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
                 .build();
 
         Trajectory duck_2 = drive.trajectoryBuilder(forwardShippingHub.end())
-                .strafeTo(new Vector2d(-20, 20))
+                .strafeRight(40)
+                .build();
+
+        Trajectory duck_2back = drive.trajectoryBuilder(duck_2.end())
+                .back(50)
+                .build();
 
         Trajectory warehouse = drive.trajectoryBuilder(duck.end())
                 .strafeTo(new Vector2d(-20, -52))
@@ -76,7 +81,7 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
         drive.followTrajectory(shippingHub_2);
         drive.followTrajectory(forwardShippingHub);
 
-        /*
+
         boolean done = false;
         directionServo.setPosition(0.9);
         double targetPosition = 2750;
@@ -107,8 +112,8 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
             }
             telemetry.update();
         }
-        */
 
+/*
         directionServo.setPosition(0.9);
         double targetPosition = 2380;
         intakeMotor.setPower(0.2);
@@ -127,16 +132,18 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
         sleep(500);
         while(armEncoder.getCurrentPosition() > targetPosition+40 || armEncoder.getCurrentPosition() < targetPosition-40){
             if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 600){
-                armRotationMotor.setPower(-0.3);
+                armRotationMotor.setPower(-0.1);
             }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 600){
-                armRotationMotor.setPower(-0.2);
+                armRotationMotor.setPower(-0.1);
             }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 600){
-                armRotationMotor.setPower(0.3);
+                armRotationMotor.setPower(0.1);
             }else{
-                armRotationMotor.setPower(0.2);
+                armRotationMotor.setPower(0.1);
             }
         }
         armRotationMotor.setPower(0);
+        intakeMotor.setPower(0);
+ */
 
         //drive.followTrajectory(shippingHub);
         //Alternative below
@@ -145,6 +152,7 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
 
         intakeMotor.setPower(-1);
         sleep(2500);
+        intakeMotor.setPower(0);
 
         directionServo.setPosition(1);
         while(armEncoder.getCurrentPosition() > 0){
@@ -155,6 +163,7 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
         //drive.followTrajectory(duck);
         drive.turn(Math.toRadians(111));
         drive.followTrajectory(duck_2);
+        drive.followTrajectory(duck_2back);
         duckMotor.setPower(.7);
         sleep(2000);
         duckMotor.setPower(0);

@@ -18,10 +18,9 @@ public abstract class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMod
    *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
    *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
    */
-    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/FreightFrenzy_DM.tflite"; //For OpenRC, loaded from internal storage to reduce APK size
+    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/customBox.tflite"; //For OpenRC, loaded from internal storage to reduce APK size
     private static final String[] LABELS = {
-      "Duck",
-      "Marker"
+      "customBox"
     };
 
     private static final String VUFORIA_KEY =

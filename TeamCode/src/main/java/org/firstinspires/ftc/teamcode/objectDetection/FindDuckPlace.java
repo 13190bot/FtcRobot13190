@@ -6,7 +6,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 import java.util.List;
 
-@Disabled
+
 @TeleOp
 public class FindDuckPlace extends ConceptTensorFlowObjectDetectionWebcam {
     @Override

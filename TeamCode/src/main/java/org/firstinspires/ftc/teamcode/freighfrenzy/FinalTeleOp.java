@@ -121,7 +121,7 @@ public class FinalTeleOp extends template {
                     }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
                         armRotationMotor.setPower(-0.25);
                     }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition >300){
-                        armRotationMotor.setPower(7);
+                        armRotationMotor.setPower(0.7);
                     }else{
                         armRotationMotor.setPower(0.25);
                     }
