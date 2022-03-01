@@ -20,7 +20,7 @@ public class ParkRegional extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory park = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(0, 80, Math.toRadians(-109)))
+                .lineToLinearHeading(new Pose2d(0, -80, Math.toRadians(-109)))
                 .build();
 
         drive.followTrajectory(park);
