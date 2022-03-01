@@ -36,7 +36,7 @@ public class DuckPark_2 extends LinearOpMode {
                 .build();
 
         Trajectory left = drive.trajectoryBuilder(warehouse.end())
-                .strafeLeft(40)
+                .strafeLeft(20)
                 .build();
 
         Trajectory park = drive.trajectoryBuilder(left.end())
@@ -54,6 +54,7 @@ public class DuckPark_2 extends LinearOpMode {
         duckMotor.setPower(0);
         drive.followTrajectory(warehouse);
         drive.followTrajectory(left);
+
         drive.followTrajectory(park);
         drive.followTrajectory(right);
 

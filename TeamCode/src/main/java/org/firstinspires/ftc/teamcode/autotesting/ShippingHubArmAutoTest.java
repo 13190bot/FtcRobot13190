@@ -77,9 +77,20 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
                 .strafeRight(30)
                 .build();
 
+        Trajectory forwardShippingHubTurn = drive.trajectoryBuilder(startPose)
+                        .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(-222)))
+                                .build();
 
-        drive.followTrajectory(shippingHub_2);
-        drive.followTrajectory(forwardShippingHub);
+        Trajectory duckshippingHub = drive.trajectoryBuilder(forwardShippingHubTurn.end())
+                        .lineToLinearHeading(new Pose2d(0, 50, Math.toRadians(-111)))
+                                .build();
+
+
+        //drive.followTrajectory(shippingHub_2);
+        //drive.followTrajectory(forwardShippingHub);
+
+
+
 
 
         boolean done = false;
@@ -112,6 +123,11 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
             }
             telemetry.update();
         }
+        drive.followTrajectory(forwardShippingHubTurn);
+
+
+
+
 
 /*
         directionServo.setPosition(0.9);
@@ -148,7 +164,7 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
         //drive.followTrajectory(shippingHub);
         //Alternative below
 
-        drive.turn(Math.toRadians(-215));
+        //drive.turn(Math.toRadians(-215));
 
         intakeMotor.setPower(-1);
         sleep(2500);
@@ -160,15 +176,13 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
         }
         armRotationMotor.setPower(0);
 
-        //drive.followTrajectory(duck);
-        drive.turn(Math.toRadians(111));
-        drive.followTrajectory(duck_2);
-        drive.followTrajectory(duck_2back);
+        drive.followTrajectory(duckshippingHub);
+
         duckMotor.setPower(.7);
         sleep(2000);
         duckMotor.setPower(0);
         drive.followTrajectory(warehouse);
-        drive.followTrajectory(left);
+    drive.followTrajectory(left);
         drive.followTrajectory(park);
         drive.followTrajectory(right);
     }
