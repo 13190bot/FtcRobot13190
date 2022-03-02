@@ -14,10 +14,10 @@ import java.util.List;
 @Disabled
 @TeleOp
 public class DuckLeftMiddle extends LinearOpMode {
-    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/FreightFrenzy_DM.tflite";
+
+    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/customBox.tflite";
     private static final String[] LABELS = {
-            "Duck",
-            "Marker"
+            "customBox"
     };
 
     private static final String VUFORIA_KEY =
@@ -54,11 +54,11 @@ public class DuckLeftMiddle extends LinearOpMode {
                                         recognition.getRight(), recognition.getBottom());
 
                                 if (recognition.getLeft() < 200) {
-                                    if (recognition.getLabel().equals("Duck")) {
+                                    if (recognition.getLabel().equals("CustomBox")) {
                                         telemetry.addData(recognition.getLabel(), " Position: Level 1");
                                     }
                                 } else if (recognition.getLeft() < 530) {
-                                    if (recognition.getLabel().equals("Duck")) {
+                                    if (recognition.getLabel().equals("CustomBox")) {
                                         telemetry.addData(recognition.getLabel(), " Position: Level 2");
                                     }
                                 } else {
