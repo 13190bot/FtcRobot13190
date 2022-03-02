@@ -44,7 +44,7 @@ public class ShiphubPark extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
+                .lineToLinearHeading(new Pose2d(40, 0, Math.toRadians(-300)))
                 .build();
         drive.followTrajectory(shippingHub);
 
@@ -90,7 +90,7 @@ public class ShiphubPark extends LinearOpMode {
         armRotationMotor.setPower(0);
 
         Trajectory duck = drive.trajectoryBuilder(shippingHub.end())
-                .lineToLinearHeading(new Pose2d(0, 30, Math.toRadians(-440)))
+                .lineToLinearHeading(new Pose2d(0, 30, Math.toRadians(-460)))
                 .build();
         drive.followTrajectory(duck);
 
