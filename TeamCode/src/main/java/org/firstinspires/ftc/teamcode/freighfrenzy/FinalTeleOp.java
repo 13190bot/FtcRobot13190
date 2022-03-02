@@ -13,7 +13,7 @@ public class FinalTeleOp extends template {
     private DcMotor frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor, duckMotor;
     public TouchSensor limit;
     static final double MAX_POSITION = 1;
-    static final double MIN_POSITION = 0.3;
+    static final double MIN_POSITION = 0;
 
     public void runOpMode() {
         frontLeftMotor = hardwareMap.dcMotor.get("leftFront");
@@ -101,12 +101,12 @@ public class FinalTeleOp extends template {
             }
             if(gamepad2.x){
                 targetPosition = 2400;
-                directionServo.setPosition(1);
+                directionServo.setPosition(0.38);
                 armMoving = true;
             }
             if(gamepad2.a){
                 targetPosition = 0;
-                directionServo.setPosition(0.7);
+                directionServo.setPosition(0.06);
                 armMoving = true;
             }
             if(armMoving){

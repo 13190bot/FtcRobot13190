@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.clawstuff;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.util.Encoder;
 
@@ -23,6 +24,7 @@ public abstract class template extends LinearOpMode {
         telemetry.addData("Status", "Initializing Arm Motors");
         telemetry.update();
         armRotationMotor = hardwareMap.get(DcMotor.class, "rotationMotor");
+        armRotationMotor.setDirection(DcMotor.Direction.REVERSE);
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

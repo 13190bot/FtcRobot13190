@@ -39,17 +39,18 @@ public class ServoTesting extends LinearOpMode {
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         directionServo = hardwareMap.get(Servo.class, "directionServo");
         armEncoder = hardwareMap.get(DcMotor.class, "armEncoder");
+        duckMotor = hardwareMap.dcMotor.get("duckMotor");
 
         drive.setPoseEstimate(startPose);
 
         Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(30, 0, Math.toRadians(-235)))
+                .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
                 .build();
         drive.followTrajectory(shippingHub);
 
         boolean done = false;
-        directionServo.setPosition(0.9);
-        double targetPosition = 2750;
+        directionServo.setPosition(0.38);
+        double targetPosition =2450;
         boolean recheck = false;
         intakeMotor.setPower(0.2);
         while(!done){
@@ -82,14 +83,14 @@ public class ServoTesting extends LinearOpMode {
         sleep(2500);
         intakeMotor.setPower(0);
 
-        directionServo.setPosition(1);
+        directionServo.setPosition(0.06);
         while(armEncoder.getCurrentPosition() > 500){
             armRotationMotor.setPower(0.4);
         }
         armRotationMotor.setPower(0);
 
         Trajectory duck = drive.trajectoryBuilder(shippingHub.end())
-                .lineToLinearHeading(new Pose2d(0, 50, Math.toRadians(-111)))
+                .lineToLinearHeading(new Pose2d(0, 25, Math.toRadians(-440)))
                 .build();
         drive.followTrajectory(duck);
 
