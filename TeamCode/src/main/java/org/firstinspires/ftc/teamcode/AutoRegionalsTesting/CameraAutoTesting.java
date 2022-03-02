@@ -30,7 +30,7 @@ public class CameraAutoTesting extends LinearOpMode {
         }
 
         long startTime = System.currentTimeMillis();
-        int level = 3;
+        int level = 3; // This indicates the level detected
 
         while ((System.currentTimeMillis() - startTime) < 1000) {
             if (tfod != null) {
