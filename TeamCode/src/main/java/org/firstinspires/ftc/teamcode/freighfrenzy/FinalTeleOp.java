@@ -42,7 +42,7 @@ public class FinalTeleOp extends template {
             if (this.gamepad1.right_trigger > 0.4) {
                 double power = 0.5;
                 while(this.gamepad1.right_trigger > 0.4){
-                    power += 0.0025;
+                    power += 0.002+5;
                     duckMotor.setPower(power);
                 }
             } else if (this.gamepad1.left_trigger > 0.4) {

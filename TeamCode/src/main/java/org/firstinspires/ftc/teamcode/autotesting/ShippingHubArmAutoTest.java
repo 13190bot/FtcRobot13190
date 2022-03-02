@@ -137,11 +137,11 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
             if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 600){
                 armRotationMotor.setPower(-0.3);
             }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 600){
-                armRotationMotor.setPower(-0.2);
+                armRotationMotor.setPower(-0.1);
             }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 600){
-                armRotationMotor.setPower(0.3);
+                armRotationMotor.setPower(0.1);
             }else{
-                armRotationMotor.setPower(0.2);
+                armRotationMotor.setPower(0.1);
             }
         }
         armRotationMotor.setPower(0);
@@ -175,6 +175,7 @@ public class ShippingHubArmAutoTest extends LinearOpMode {
             armRotationMotor.setPower(0.4);
         }
         armRotationMotor.setPower(0);
+        intakeMotor.setPower(0);
 
         drive.followTrajectory(duckshippingHub);
 

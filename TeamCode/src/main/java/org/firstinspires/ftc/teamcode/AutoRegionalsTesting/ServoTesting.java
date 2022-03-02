@@ -40,6 +40,11 @@ public class ServoTesting extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
+        Trajectory shippingHub = drive.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(-222)))
+                .build();
+        drive.followTrajectory(shippingHub);
+
         boolean done = false;
         directionServo.setPosition(0.9);
         double targetPosition = 2750;
@@ -58,12 +63,12 @@ public class ServoTesting extends LinearOpMode {
                 }
             }
             else {
-                if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 600){
-                    armRotationMotor.setPower(-0.3);
-                }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 600){
+                if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 300){
+                    armRotationMotor.setPower(-0.7);
+                }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
                     armRotationMotor.setPower(-0.25);
-                }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 600){
-                    armRotationMotor.setPower(0.3);
+                }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 300){
+                    armRotationMotor.setPower(0.7);
                 }else{
                     armRotationMotor.setPower(0.25);
                 }
@@ -71,17 +76,12 @@ public class ServoTesting extends LinearOpMode {
             telemetry.update();
         }
 
-        Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(-222)))
-                .build();
-        drive.followTrajectory(shippingHub);
-
         intakeMotor.setPower(-1);
         sleep(2500);
         intakeMotor.setPower(0);
 
         directionServo.setPosition(1);
-        while(armEncoder.getCurrentPosition() > 0){
+        while(armEncoder.getCurrentPosition() > 500){
             armRotationMotor.setPower(0.4);
         }
         armRotationMotor.setPower(0);
