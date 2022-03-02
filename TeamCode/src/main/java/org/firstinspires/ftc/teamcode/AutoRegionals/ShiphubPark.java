@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.AutoRegionalsTesting;
+package org.firstinspires.ftc.teamcode.AutoRegionals;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "ServoTesting")
-public class ServoTesting extends LinearOpMode {
+@Autonomous(name = "ShipHubParkRegional")
+public class ShiphubPark extends LinearOpMode {
 
     private DcMotor frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor;
 
