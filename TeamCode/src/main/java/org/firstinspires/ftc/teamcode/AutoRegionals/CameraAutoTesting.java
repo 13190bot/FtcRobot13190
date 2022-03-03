@@ -58,13 +58,11 @@ public class CameraAutoTesting extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         if (tfod != null) {
-            tfod.setZoom(2.5, 16.0/9.0);
+            tfod.setZoom(2.5, 16.0 / 9.0);
         }
-
-        long startTime = System.currentTimeMillis();
         int level = 3; // This indicates the level detected
 
-        while ((System.currentTimeMillis() - startTime) < 1000) {
+        while (!isStarted()) {
             if (tfod != null) {
                 List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                 if (updatedRecognitions != null) {
@@ -85,43 +83,45 @@ public class CameraAutoTesting extends LinearOpMode {
                             level = 3;
                         }
                         i++;
+                        telemetry.addData("Level: ", level);
                     }
                     telemetry.update();
                 }
             }
         }
 
+        waitForStart();
+
         //TODO add driving and arm code
-        if(level==1) {
+        if (level == 1) {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
                     .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
             directionServo.setPosition(0.14);
-            double targetPosition =4050;
+            double targetPosition = 4050;
             boolean recheck = false;
             intakeMotor.setPower(0.2);
-            while(!done){
+            while (!done) {
                 telemetry.addData("armPos", armEncoder.getCurrentPosition());
-                if(armEncoder.getCurrentPosition() < targetPosition+20 && armEncoder.getCurrentPosition() > targetPosition-20){
-                    if(recheck == true){
+                if (armEncoder.getCurrentPosition() < targetPosition + 20 && armEncoder.getCurrentPosition() > targetPosition - 20) {
+                    if (recheck == true) {
                         armRotationMotor.setPower(0);
                         done = true;
-                    }else{
+                    } else {
                         armRotationMotor.setPower(0);
                         sleep(500);
                         recheck = true;
                     }
-                }
-                else {
-                    if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 300){
+                } else {
+                    if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 300) {
                         armRotationMotor.setPower(-0.7);
-                    }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
+                    } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 300) {
                         armRotationMotor.setPower(-0.25);
-                    }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 300){
+                    } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 300) {
                         armRotationMotor.setPower(0.7);
-                    }else{
+                    } else {
                         armRotationMotor.setPower(0.25);
                     }
                 }
@@ -132,7 +132,7 @@ public class CameraAutoTesting extends LinearOpMode {
             intakeMotor.setPower(0);
 
             directionServo.setPosition(0.06);
-            while(armEncoder.getCurrentPosition() > 500){
+            while (armEncoder.getCurrentPosition() > 500) {
                 armRotationMotor.setPower(0.4);
             }
             armRotationMotor.setPower(0);
@@ -162,37 +162,35 @@ public class CameraAutoTesting extends LinearOpMode {
             rearRightMotor.setPower(0);
 
 
-        }
-        else if(level==2) {
+        } else if (level == 2) {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
                     .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
             directionServo.setPosition(0.22);
-            double targetPosition =3430;
+            double targetPosition = 3430;
             boolean recheck = false;
             intakeMotor.setPower(0.2);
-            while(!done){
+            while (!done) {
                 telemetry.addData("armPos", armEncoder.getCurrentPosition());
-                if(armEncoder.getCurrentPosition() < targetPosition+20 && armEncoder.getCurrentPosition() > targetPosition-20){
-                    if(recheck == true){
+                if (armEncoder.getCurrentPosition() < targetPosition + 20 && armEncoder.getCurrentPosition() > targetPosition - 20) {
+                    if (recheck == true) {
                         armRotationMotor.setPower(0);
                         done = true;
-                    }else{
+                    } else {
                         armRotationMotor.setPower(0);
                         sleep(500);
                         recheck = true;
                     }
-                }
-                else {
-                    if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 300){
+                } else {
+                    if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 300) {
                         armRotationMotor.setPower(-0.7);
-                    }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
+                    } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 300) {
                         armRotationMotor.setPower(-0.25);
-                    }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 300){
+                    } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 300) {
                         armRotationMotor.setPower(0.7);
-                    }else{
+                    } else {
                         armRotationMotor.setPower(0.25);
                     }
                 }
@@ -203,7 +201,7 @@ public class CameraAutoTesting extends LinearOpMode {
             intakeMotor.setPower(0);
 
             directionServo.setPosition(0.06);
-            while(armEncoder.getCurrentPosition() > 500){
+            while (armEncoder.getCurrentPosition() > 500) {
                 armRotationMotor.setPower(0.4);
             }
             armRotationMotor.setPower(0);
@@ -233,37 +231,35 @@ public class CameraAutoTesting extends LinearOpMode {
             rearRightMotor.setPower(0);
 
 
-        }
-        else {
+        } else {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
                     .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
             directionServo.setPosition(0.38);
-            double targetPosition =2450;
+            double targetPosition = 2450;
             boolean recheck = false;
             intakeMotor.setPower(0.2);
-            while(!done){
+            while (!done) {
                 telemetry.addData("armPos", armEncoder.getCurrentPosition());
-                if(armEncoder.getCurrentPosition() < targetPosition+20 && armEncoder.getCurrentPosition() > targetPosition-20){
-                    if(recheck == true){
+                if (armEncoder.getCurrentPosition() < targetPosition + 20 && armEncoder.getCurrentPosition() > targetPosition - 20) {
+                    if (recheck == true) {
                         armRotationMotor.setPower(0);
                         done = true;
-                    }else{
+                    } else {
                         armRotationMotor.setPower(0);
                         sleep(500);
                         recheck = true;
                     }
-                }
-                else {
-                    if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 300){
+                } else {
+                    if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 300) {
                         armRotationMotor.setPower(-0.7);
-                    }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
+                    } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 300) {
                         armRotationMotor.setPower(-0.25);
-                    }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 300){
+                    } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 300) {
                         armRotationMotor.setPower(0.7);
-                    }else{
+                    } else {
                         armRotationMotor.setPower(0.25);
                     }
                 }
@@ -274,7 +270,7 @@ public class CameraAutoTesting extends LinearOpMode {
             intakeMotor.setPower(0);
 
             directionServo.setPosition(0.06);
-            while(armEncoder.getCurrentPosition() > 500){
+            while (armEncoder.getCurrentPosition() > 500) {
                 armRotationMotor.setPower(0.4);
             }
             armRotationMotor.setPower(0);
@@ -305,10 +301,6 @@ public class CameraAutoTesting extends LinearOpMode {
 
 
         }
-
-
-
-
 
 
     }
