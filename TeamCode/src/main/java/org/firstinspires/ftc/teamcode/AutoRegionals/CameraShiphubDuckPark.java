@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import java.util.List;
 
 @Autonomous(name = "CameraShiphubDuckPark")
-public class CameraAutoTesting extends LinearOpMode {
+public class CameraShiphubDuckPark extends LinearOpMode {
 
     private DcMotor frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor;
     public DcMotor armRotationMotor;
