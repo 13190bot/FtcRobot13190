@@ -57,11 +57,10 @@ public class CameraAutoTesting extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
-        if (tfod != null) {
-            tfod.setZoom(2.5, 16.0 / 9.0);
-        }
         int level = 3; // This indicates the level detected
-
+        if (tfod != null) {
+            tfod.activate();
+        }
         while (!isStarted()) {
             if (tfod != null) {
                 List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();

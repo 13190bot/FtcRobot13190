@@ -34,10 +34,41 @@ public class DuckLeftMiddle extends LinearOpMode {
         if (tfod != null) {
             tfod.activate();
         }
+        int level = 3; // This indicates the level detected
+
+        while (!isStarted()) {
+            if (tfod != null) {
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    int i = 0;
+                    for (Recognition recognition : updatedRecognitions) {
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+
+                        if (recognition.getLeft() < 200) {
+                            level = 1;
+                        } else if (recognition.getLeft() < 530) {
+                            level = 2;
+                        } else {
+                            level = 3;
+                        }
+                        i++;
+                    }
+                    telemetry.update();
+                }
+            }
+        }
 
         waitForStart();
 
+        telemetry.addData("Level: ", level);
+        telemetry.update();
 
+/*
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 while (tfod == null) {
@@ -72,7 +103,7 @@ public class DuckLeftMiddle extends LinearOpMode {
                     }
                 }
             }
-        }
+        }*/
 
     }
 
