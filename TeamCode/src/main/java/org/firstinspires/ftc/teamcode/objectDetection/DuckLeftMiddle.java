@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Disabled
+
 @TeleOp
 public class DuckLeftMiddle extends LinearOpMode {
 
@@ -48,7 +48,6 @@ public class DuckLeftMiddle extends LinearOpMode {
                                 recognition.getLeft(), recognition.getTop());
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
-
                         if (recognition.getLeft() < 200) {
                             level = 1;
                         } else if (recognition.getLeft() < 530) {
@@ -57,6 +56,7 @@ public class DuckLeftMiddle extends LinearOpMode {
                             level = 3;
                         }
                         i++;
+                        telemetry.addData("Level: ", level);
                     }
                     telemetry.update();
                 }
@@ -64,8 +64,6 @@ public class DuckLeftMiddle extends LinearOpMode {
         }
 
         waitForStart();
-
-        telemetry.addData("Level: ", level);
         telemetry.update();
 
 /*
@@ -111,7 +109,7 @@ public class DuckLeftMiddle extends LinearOpMode {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam");
 
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
