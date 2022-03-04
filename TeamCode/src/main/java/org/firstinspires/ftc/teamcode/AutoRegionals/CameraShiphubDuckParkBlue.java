@@ -94,7 +94,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
         //TODO add driving and arm code
         if (level == 1) {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
+                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
@@ -163,7 +163,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
 
         } else if (level == 2) {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
+                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
@@ -232,7 +232,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
 
         } else {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(-240)))
+                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
