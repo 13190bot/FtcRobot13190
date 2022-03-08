@@ -41,9 +41,22 @@ public class ShiphubParkBlue extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(185)))
+                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(210)))
                 .build();
-        drive.followTrajectory(shipHub);
+        //drive.followTrajectory(shipHub);
+
+        //Code used below is used when robot is started backwards (should be the start position from now on)
+        frontLeftMotor.setPower(-1);
+        frontRightMotor.setPower(-1);
+        rearLeftMotor.setPower(-1);
+        rearRightMotor.setPower(-1);
+        sleep(1700);
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
+
+
         boolean done = false;
         directionServo.setPosition(0.38);
         double targetPosition = 2450;
@@ -84,7 +97,7 @@ public class ShiphubParkBlue extends LinearOpMode {
         armRotationMotor.setPower(0);
 
         Trajectory line = drive.trajectoryBuilder(shipHub.end())
-                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(100)))
+                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(240)))
                 .build();
         drive.followTrajectory(line);
 

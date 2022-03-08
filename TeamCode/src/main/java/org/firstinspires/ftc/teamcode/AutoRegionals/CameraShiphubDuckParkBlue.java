@@ -243,7 +243,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
 
         } else {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                    .lineToLinearHeading(new Pose2d(62, 7, Math.toRadians(240)))
+                    .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(300)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
@@ -295,7 +295,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
             duckMotor.setPower(0);
 
             Trajectory left = drive.trajectoryBuilder(duck.end())
-                    .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(120)))
+                    .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(110)))
                     .build();
             drive.followTrajectory(left);
 
@@ -303,7 +303,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
             frontRightMotor.setPower(1);
             rearLeftMotor.setPower(1);
             rearRightMotor.setPower(1);
-            sleep(2500);
+            sleep(2050);
             frontLeftMotor.setPower(0);
             frontRightMotor.setPower(0);
             rearLeftMotor.setPower(0);
