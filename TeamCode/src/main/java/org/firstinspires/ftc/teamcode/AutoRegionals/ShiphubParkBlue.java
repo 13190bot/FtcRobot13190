@@ -40,9 +40,64 @@ public class ShiphubParkBlue extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
-        Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(-300)))
+        Trajectory shipHub = drive.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(185)))
                 .build();
-        drive.followTrajectory(shippingHub);
+        drive.followTrajectory(shipHub);
+        boolean done = false;
+        directionServo.setPosition(0.38);
+        double targetPosition = 2450;
+        boolean recheck = false;
+        intakeMotor.setPower(0.2);
+        while (!done) {
+            telemetry.addData("armPos", armEncoder.getCurrentPosition());
+            if (armEncoder.getCurrentPosition() < targetPosition + 20 && armEncoder.getCurrentPosition() > targetPosition - 20) {
+                if (recheck == true) {
+                    armRotationMotor.setPower(0);
+                    done = true;
+                } else {
+                    armRotationMotor.setPower(0);
+                    sleep(500);
+                    recheck = true;
+                }
+            } else {
+                if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 300) {
+                    armRotationMotor.setPower(-0.7);
+                } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 300) {
+                    armRotationMotor.setPower(-0.25);
+                } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 300) {
+                    armRotationMotor.setPower(0.7);
+                } else {
+                    armRotationMotor.setPower(0.25);
+                }
+            }
+            telemetry.update();
+        }
+        intakeMotor.setPower(-1);
+        sleep(2500);
+        intakeMotor.setPower(0);
+
+        directionServo.setPosition(0.06);
+        while (armEncoder.getCurrentPosition() > 500) {
+            armRotationMotor.setPower(0.4);
+        }
+        armRotationMotor.setPower(0);
+
+        Trajectory line = drive.trajectoryBuilder(shipHub.end())
+                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(100)))
+                .build();
+        drive.followTrajectory(line);
+
+        frontLeftMotor.setPower(1);
+        frontRightMotor.setPower(1);
+        rearLeftMotor.setPower(1);
+        rearRightMotor.setPower(1);
+        sleep(1800);
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
+        rearRightMotor.setPower(0);
+
+
     }
 }
