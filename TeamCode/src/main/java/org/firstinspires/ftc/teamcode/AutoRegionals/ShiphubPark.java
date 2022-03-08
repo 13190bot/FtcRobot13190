@@ -2,21 +2,18 @@ package org.firstinspires.ftc.teamcode.AutoRegionals;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "ShipHubParkRegional")
+@Autonomous(name = "ShiphubParkRegional")
 public class ShiphubPark extends LinearOpMode {
 
     private DcMotor frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor;
 
     DcMotor duckMotor;
-
     public DcMotor armRotationMotor;
     public DcMotor intakeMotor;
     public Servo directionServo;
@@ -43,69 +40,64 @@ public class ShiphubPark extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
-        Trajectory shippingHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(35, 0, Math.toRadians(-360)))
+        Trajectory shipHub = drive.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(-185)))
                 .build();
-        drive.followTrajectory(shippingHub);
-
+        drive.followTrajectory(shipHub);
         boolean done = false;
         directionServo.setPosition(0.38);
-        double targetPosition =2450;
+        double targetPosition = 2450;
         boolean recheck = false;
         intakeMotor.setPower(0.2);
-        while(!done){
+        while (!done) {
             telemetry.addData("armPos", armEncoder.getCurrentPosition());
-            if(armEncoder.getCurrentPosition() < targetPosition+20 && armEncoder.getCurrentPosition() > targetPosition-20){
-                if(recheck == true){
+            if (armEncoder.getCurrentPosition() < targetPosition + 20 && armEncoder.getCurrentPosition() > targetPosition - 20) {
+                if (recheck == true) {
                     armRotationMotor.setPower(0);
                     done = true;
-                }else{
+                } else {
                     armRotationMotor.setPower(0);
                     sleep(500);
                     recheck = true;
                 }
-            }
-            else {
-                if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 300){
+            } else {
+                if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 300) {
                     armRotationMotor.setPower(-0.7);
-                }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
+                } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 300) {
                     armRotationMotor.setPower(-0.25);
-                }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition > 300){
+                } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 300) {
                     armRotationMotor.setPower(0.7);
-                }else{
+                } else {
                     armRotationMotor.setPower(0.25);
                 }
             }
             telemetry.update();
         }
-
         intakeMotor.setPower(-1);
         sleep(2500);
         intakeMotor.setPower(0);
 
         directionServo.setPosition(0.06);
-        while(armEncoder.getCurrentPosition() > 500){
+        while (armEncoder.getCurrentPosition() > 500) {
             armRotationMotor.setPower(0.4);
         }
         armRotationMotor.setPower(0);
 
-        drive.turn(Math.toRadians(-111));
+        Trajectory line = drive.trajectoryBuilder(shipHub.end())
+                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(-100)))
+                .build();
+        drive.followTrajectory(line);
 
-
-        //Moves the robot forward, using this instead of the .forward trajectory from roadrunner
         frontLeftMotor.setPower(1);
         frontRightMotor.setPower(1);
         rearLeftMotor.setPower(1);
         rearRightMotor.setPower(1);
-        sleep(8000);
+        sleep(1800);
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         rearLeftMotor.setPower(0);
         rearRightMotor.setPower(0);
 
 
-
     }
 }
-
-
