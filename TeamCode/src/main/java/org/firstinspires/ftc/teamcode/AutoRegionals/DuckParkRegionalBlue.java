@@ -28,16 +28,16 @@ public class DuckParkRegionalBlue extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory duck = drive.trajectoryBuilder(startPose)
-                .strafeRight(25)
+                .strafeRight(35)
                 .build();
         drive.followTrajectory(duck);
 
-        duckMotor.setPower(0.7);
+        duckMotor.setPower(-0.7);
         sleep(2100);
         duckMotor.setPower(0);
 
         Trajectory forward = drive.trajectoryBuilder(duck.end())
-                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(111)))
+                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(106)))
                 .build();
         drive.followTrajectory(forward);
 
@@ -46,7 +46,7 @@ public class DuckParkRegionalBlue extends LinearOpMode {
         frontRightMotor.setPower(1);
         rearLeftMotor.setPower(1);
         rearRightMotor.setPower(1);
-        sleep(8000);
+        sleep(5000);
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         rearLeftMotor.setPower(0);

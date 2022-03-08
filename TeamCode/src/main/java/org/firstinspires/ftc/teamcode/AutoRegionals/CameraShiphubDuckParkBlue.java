@@ -114,11 +114,11 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
                         recheck = true;
                     }
                 } else {
-                    if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 300) {
+                    if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 400) {
                         armRotationMotor.setPower(-0.7);
-                    } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 300) {
+                    } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 400) {
                         armRotationMotor.setPower(-0.25);
-                    } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 300) {
+                    } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 400) {
                         armRotationMotor.setPower(0.7);
                     } else {
                         armRotationMotor.setPower(0.25);
@@ -163,7 +163,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
 
         } else if (level == 2) {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(240)))
+                    .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
@@ -195,7 +195,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
                 }
                 telemetry.update();
             }
-            intakeMotor.setPower(-1);
+            intakeMotor.setPower(1);
             sleep(2500);
             intakeMotor.setPower(0);
 
@@ -205,16 +205,27 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
             }
             armRotationMotor.setPower(0);
 
-            Trajectory duck = drive.trajectoryBuilder(shipHub.end())
-                    .lineToLinearHeading(new Pose2d(0, 30, Math.toRadians(-460)))
+            drive.turnAsync(Math.toRadians(180));
+            Trajectory left2 = drive.trajectoryBuilder(shipHub.end())
+                    .strafeLeft(30)
                     .build();
-            drive.followTrajectory(duck);
+            drive.followTrajectory(left2);
+
+            frontLeftMotor.setPower(-1);
+            frontRightMotor.setPower(-1);
+            rearLeftMotor.setPower(-1);
+            rearRightMotor.setPower(-1);
+            sleep(2100);
+            frontLeftMotor.setPower(0);
+            frontRightMotor.setPower(0);
+            rearLeftMotor.setPower(0);
+            rearRightMotor.setPower(0);
 
             duckMotor.setPower(0.7);
             sleep(2100);
             duckMotor.setPower(0);
 
-            Trajectory left = drive.trajectoryBuilder(duck.end())
+            Trajectory left = drive.trajectoryBuilder(left2.end())
                     .strafeLeft(30)
                     .build();
             drive.followTrajectory(left);
@@ -232,12 +243,12 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
 
         } else {
             Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                    .lineToLinearHeading(new Pose2d(50, 0, Math.toRadians(240)))
+                    .lineToLinearHeading(new Pose2d(62, 7, Math.toRadians(240)))
                     .build();
             drive.followTrajectory(shipHub);
             boolean done = false;
             directionServo.setPosition(0.38);
-            double targetPosition = 2450;
+            double targetPosition = 2550;
             boolean recheck = false;
             intakeMotor.setPower(0.2);
             while (!done) {
@@ -264,27 +275,27 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
                 }
                 telemetry.update();
             }
-            intakeMotor.setPower(-1);
-            sleep(2500);
+            intakeMotor.setPower(1);
+            sleep(1000);
             intakeMotor.setPower(0);
 
-            directionServo.setPosition(0.06);
+            directionServo.setPosition(0.5);
             while (armEncoder.getCurrentPosition() > 500) {
                 armRotationMotor.setPower(0.4);
             }
             armRotationMotor.setPower(0);
 
             Trajectory duck = drive.trajectoryBuilder(shipHub.end())
-                    .lineToLinearHeading(new Pose2d(0, 30, Math.toRadians(-460)))
+                    .lineToLinearHeading(new Pose2d(0, -30, Math.toRadians(0)))
                     .build();
             drive.followTrajectory(duck);
 
-            duckMotor.setPower(0.7);
-            sleep(2100);
+            duckMotor.setPower(-0.7);
+            sleep(3000);
             duckMotor.setPower(0);
 
             Trajectory left = drive.trajectoryBuilder(duck.end())
-                    .strafeLeft(30)
+                    .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(120)))
                     .build();
             drive.followTrajectory(left);
 
@@ -292,7 +303,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
             frontRightMotor.setPower(1);
             rearLeftMotor.setPower(1);
             rearRightMotor.setPower(1);
-            sleep(8000);
+            sleep(2500);
             frontLeftMotor.setPower(0);
             frontRightMotor.setPower(0);
             rearLeftMotor.setPower(0);

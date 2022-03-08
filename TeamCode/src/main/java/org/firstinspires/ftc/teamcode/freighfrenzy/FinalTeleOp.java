@@ -66,10 +66,9 @@ public class FinalTeleOp extends template {
             telemetry.addData("armMoving", armMoving);
 
             if (gamepad2.right_trigger > 0.2) {
-                telemetry.addData("duckInput", true);
-                intakeMotor.setPower(1);
-            } else if (gamepad2.left_trigger > 0.2) {
                 intakeMotor.setPower(-1);
+            } else if (gamepad2.left_trigger > 0.2) {
+                intakeMotor.setPower(1);
             } else {
                 intakeMotor.setPower(0);
             }
@@ -104,6 +103,11 @@ public class FinalTeleOp extends template {
                 directionServo.setPosition(0.38);
                 armMoving = true;
             }
+            if(gamepad2.y){
+                targetPosition = 3430;
+                directionServo.setPosition(0.22);
+                armMoving = true;
+            }
             if(gamepad2.a){
                 targetPosition = 0;
                 directionServo.setPosition(0.06);
@@ -122,14 +126,14 @@ public class FinalTeleOp extends template {
                     }
                 }
                 else{
-                    if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 300){
+                    if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() > 200){
                         armRotationMotor.setPower(-1);
-                    }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 300){
-                        armRotationMotor.setPower(-0.25);
-                    }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition >300){
+                    }else if(armEncoder.getCurrentPosition() < targetPosition && targetPosition-armEncoder.getCurrentPosition() < 200){
+                        armRotationMotor.setPower(-0.15);
+                    }else if(armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition()-targetPosition >200){
                         armRotationMotor.setPower(0.7);
                     }else{
-                        armRotationMotor.setPower(0.25);
+                        armRotationMotor.setPower(0.15);
                     }
                 }
             }
