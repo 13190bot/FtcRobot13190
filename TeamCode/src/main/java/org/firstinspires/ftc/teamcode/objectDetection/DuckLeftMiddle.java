@@ -15,7 +15,7 @@ import java.util.List;
 @TeleOp
 public class DuckLeftMiddle extends LinearOpMode {
 
-    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/customBox.tflite";
+    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/customBoxNew.tflite";
     private static final String[] LABELS = {
             "customBox"
     };

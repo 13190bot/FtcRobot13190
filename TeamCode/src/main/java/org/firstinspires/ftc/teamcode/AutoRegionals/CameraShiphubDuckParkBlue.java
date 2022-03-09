@@ -25,7 +25,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
     public DcMotor armEncoder;
     DcMotor duckMotor;
 
-    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/customBox.tflite";
+    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/customBoxNew.tflite";
     private static final String[] LABELS = {
             "customBox"
     };
