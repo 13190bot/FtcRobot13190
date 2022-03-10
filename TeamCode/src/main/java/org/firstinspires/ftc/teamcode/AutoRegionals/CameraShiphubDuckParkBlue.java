@@ -57,10 +57,14 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
-        int level = 3; // This indicates the level detected
+        initVuforia();
+        initTfod();
+
         if (tfod != null) {
             tfod.activate();
         }
+        int level = 3; // This indicates the level detected
+
         while (!isStarted()) {
             if (tfod != null) {
                 List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -73,13 +77,10 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
                                 recognition.getLeft(), recognition.getTop());
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
-
                         if (recognition.getLeft() < 200) {
                             level = 1;
                         } else if (recognition.getLeft() < 600) {
                             level = 2;
-                        } else {
-                            level = 3;
                         }
                         i++;
                         telemetry.addData("Level: ", level);
@@ -99,19 +100,21 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
                 directionServo.setPosition(0.38);
                 targetPosition = 2550;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(51, 7, Math.toRadians(300)))
+                        .lineToLinearHeading(new Pose2d(51, 7, Math.toRadians(340)))
                         .build();
+                break;
             case 2:
                 directionServo.setPosition(0.22);
                 targetPosition = 3530;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(300)))
+                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(340)))
                         .build();
+                break;
             default:
                 directionServo.setPosition(0.14);
                 targetPosition = 4150;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(300)))
+                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(340)))
                         .build();
         }
         drive.followTrajectory(shipHub);
@@ -184,7 +187,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam");
 
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }

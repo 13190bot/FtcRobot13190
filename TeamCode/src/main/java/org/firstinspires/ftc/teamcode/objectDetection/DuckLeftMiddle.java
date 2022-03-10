@@ -48,9 +48,9 @@ public class DuckLeftMiddle extends LinearOpMode {
                                 recognition.getLeft(), recognition.getTop());
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
-                        if (recognition.getLeft() < 200) {
+                        if (recognition.getLeft() < 250) {
                             level = 1;
-                        } else if (recognition.getLeft() < 530) {
+                        } else if (recognition.getLeft() < 600) {
                             level = 2;
                         } else {
                             level = 3;
