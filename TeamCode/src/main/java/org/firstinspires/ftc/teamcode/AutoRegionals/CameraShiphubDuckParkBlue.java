@@ -76,7 +76,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
 
                         if (recognition.getLeft() < 200) {
                             level = 1;
-                        } else if (recognition.getLeft() < 530) {
+                        } else if (recognition.getLeft() < 600) {
                             level = 2;
                         } else {
                             level = 3;
