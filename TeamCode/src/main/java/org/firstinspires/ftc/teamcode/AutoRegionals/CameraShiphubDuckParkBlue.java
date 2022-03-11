@@ -107,7 +107,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
                 directionServo.setPosition(0.22);
                 targetPosition = 3530;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(340)))
+                        .lineToLinearHeading(new Pose2d(37, 15, Math.toRadians(200)))
                         .build();
                 break;
             default:

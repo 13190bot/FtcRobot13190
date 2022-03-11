@@ -156,7 +156,7 @@ public class CameraShiphubDuckPark extends LinearOpMode {
         armRotationMotor.setPower(0);
 
         Trajectory duck = drive.trajectoryBuilder(shipHub.end())
-                .lineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-110)))
+                .lineToLinearHeading(new Pose2d(-10, 34, Math.toRadians(-110)))
                 .build();
         drive.followTrajectory(duck);
 
@@ -164,8 +164,10 @@ public class CameraShiphubDuckPark extends LinearOpMode {
         sleep(3000);
         duckMotor.setPower(0);
 
+
+
         Trajectory left = drive.trajectoryBuilder(duck.end())
-                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(-110)))
+                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(-130)))
                 .build();
         drive.followTrajectory(left);
 
