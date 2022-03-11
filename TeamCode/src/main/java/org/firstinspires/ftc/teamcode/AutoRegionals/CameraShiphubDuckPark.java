@@ -100,21 +100,21 @@ public class CameraShiphubDuckPark extends LinearOpMode {
                 directionServo.setPosition(0.38);
                 targetPosition = 2550;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(51, 7, Math.toRadians(-340)))
+                        .lineToLinearHeading(new Pose2d(37, 7, Math.toRadians(-200)))
                         .build();
                 break;
             case 2:
                 directionServo.setPosition(0.22);
                 targetPosition = 3530;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(-340)))
+                        .lineToLinearHeading(new Pose2d(37, 7, Math.toRadians(-200)))
                         .build();
                 break;
             default:
                 directionServo.setPosition(0.14);
                 targetPosition = 4150;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(-340)))
+                        .lineToLinearHeading(new Pose2d(40, 7, Math.toRadians(-200)))
                         .build();
         }
         drive.followTrajectory(shipHub);
@@ -156,7 +156,7 @@ public class CameraShiphubDuckPark extends LinearOpMode {
         armRotationMotor.setPower(0);
 
         Trajectory duck = drive.trajectoryBuilder(shipHub.end())
-                .lineToLinearHeading(new Pose2d(0, -30, Math.toRadians(-110)))
+                .lineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-110)))
                 .build();
         drive.followTrajectory(duck);
 
