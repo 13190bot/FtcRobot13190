@@ -41,16 +41,18 @@ public class ShiphubPark extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory shipHub = drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(25, 0, Math.toRadians(210)))
+                .lineToLinearHeading(new Pose2d(-28, 0, Math.toRadians(0)))
                 .build();
-        //drive.followTrajectory(shipHub);
+        drive.followTrajectory(shipHub);
 
         //Code used below is used when robot is started backwards (should be the start position from now on)
+        /*
         frontLeftMotor.setPower(-1);
         frontRightMotor.setPower(-1);
         rearLeftMotor.setPower(-1);
         rearRightMotor.setPower(-1);
-        sleep(1700);
+        sleep(300);
+         */
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         rearLeftMotor.setPower(0);
@@ -86,20 +88,26 @@ public class ShiphubPark extends LinearOpMode {
             }
             telemetry.update();
         }
-        intakeMotor.setPower(-1);
-        sleep(2500);
+        intakeMotor.setPower(1);
+        sleep(2000);
         intakeMotor.setPower(0);
 
-        directionServo.setPosition(0.06);
+        //0.06
+        directionServo.setPosition(0.5);
         while (armEncoder.getCurrentPosition() > 500) {
             armRotationMotor.setPower(0.4);
         }
         armRotationMotor.setPower(0);
 
         Trajectory line = drive.trajectoryBuilder(shipHub.end())
-                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(-240)))
+                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(100)))
                 .build();
         drive.followTrajectory(line);
+
+        Trajectory left = drive.trajectoryBuilder(line.end())
+                .strafeLeft(32)
+                .build();
+        drive.followTrajectory(left);
 
         frontLeftMotor.setPower(1);
         frontRightMotor.setPower(1);

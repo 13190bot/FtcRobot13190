@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.List;
 
-@Autonomous(name = "CameraShiphubDuckParkBlueOld")
-public class CameraShiphubDuckParkBlue extends LinearOpMode {
+@Autonomous(name = "CameraShiphubDuckParkBlue")
+public class CameraShiphubDuckParkBlueNew extends LinearOpMode {
 
     private DcMotor frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor;
     public DcMotor armRotationMotor;
@@ -77,7 +77,7 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
                                 recognition.getLeft(), recognition.getTop());
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
-                        if (recognition.getLeft() < 200) {
+                        if (recognition.getLeft() < 250) {
                             level = 1;
                         } else if (recognition.getLeft() < 600) {
                             level = 2;
@@ -96,88 +96,89 @@ public class CameraShiphubDuckParkBlue extends LinearOpMode {
         Trajectory shipHub;
         double targetPosition;
         switch(level){
-            case 1:
+            case 3:
                 directionServo.setPosition(0.38);
                 targetPosition = 2550;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(51, 7, Math.toRadians(340)))
+                        .lineToLinearHeading(new Pose2d(52, 4, Math.toRadians(220)))
                         .build();
                 break;
             case 2:
                 directionServo.setPosition(0.22);
                 targetPosition = 3530;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(37, 15, Math.toRadians(200)))
+                        .lineToLinearHeading(new Pose2d(37, 0, Math.toRadians(210)))
                         .build();
                 break;
             default:
                 directionServo.setPosition(0.14);
                 targetPosition = 4150;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(55, 7, Math.toRadians(340)))
+                        .lineToLinearHeading(new Pose2d(32, -9, Math.toRadians(210)))
                         .build();
         }
         drive.followTrajectory(shipHub);
-            boolean done = false;
-            boolean recheck = false;
-            intakeMotor.setPower(-0.2);
-            while (!done) {
-                telemetry.addData("armPos", armEncoder.getCurrentPosition());
-                if (armEncoder.getCurrentPosition() < targetPosition + 20 && armEncoder.getCurrentPosition() > targetPosition - 20) {
-                    if (recheck == true) {
-                        armRotationMotor.setPower(0);
-                        done = true;
-                    } else {
-                        armRotationMotor.setPower(0);
-                        sleep(500);
-                        recheck = true;
-                    }
+        boolean done = false;
+        boolean recheck = false;
+        intakeMotor.setPower(-0.2);
+        while (!done) {
+            telemetry.addData("armPos", armEncoder.getCurrentPosition());
+            if (armEncoder.getCurrentPosition() < targetPosition + 20 && armEncoder.getCurrentPosition() > targetPosition - 20) {
+                if (recheck) {
+                    armRotationMotor.setPower(0);
+                    done = true;
                 } else {
-                    if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 400) {
-                        armRotationMotor.setPower(-0.7);
-                    } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 400) {
-                        armRotationMotor.setPower(-0.15);
-                    } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 400) {
-                        armRotationMotor.setPower(0.7);
-                    } else {
-                        armRotationMotor.setPower(0.15);
-                    }
+                    armRotationMotor.setPower(0);
+                    sleep(500);
+                    recheck = true;
                 }
-                telemetry.update();
+            } else {
+                if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() > 400) {
+                    armRotationMotor.setPower(-0.7);
+                } else if (armEncoder.getCurrentPosition() < targetPosition && targetPosition - armEncoder.getCurrentPosition() < 400) {
+                    armRotationMotor.setPower(-0.15);
+                } else if (armEncoder.getCurrentPosition() > targetPosition && armEncoder.getCurrentPosition() - targetPosition > 400) {
+                    armRotationMotor.setPower(0.7);
+                } else {
+                    armRotationMotor.setPower(0.15);
+                }
             }
-            intakeMotor.setPower(1);
-            sleep(1000);
-            intakeMotor.setPower(0);
+            telemetry.update();
+        }
+        intakeMotor.setPower(1);
+        sleep(1500);
+        intakeMotor.setPower(0);
 
-            directionServo.setPosition(0.5);
-            while (armEncoder.getCurrentPosition() > 500) {
-                armRotationMotor.setPower(0.4);
-            }
-            armRotationMotor.setPower(0);
+        directionServo.setPosition(0.5);
+        while (armEncoder.getCurrentPosition() > 500) {
+            armRotationMotor.setPower(0.4);
+        }
+        armRotationMotor.setPower(0);
 
-            Trajectory duck = drive.trajectoryBuilder(shipHub.end())
-                    .lineToLinearHeading(new Pose2d(0, -30, Math.toRadians(0)))
-                    .build();
-            drive.followTrajectory(duck);
+        Trajectory duck = drive.trajectoryBuilder(shipHub.end())
+                .lineToLinearHeading(new Pose2d(0, -30, Math.toRadians(0)))
+                .build();
+        drive.followTrajectory(duck);
 
-            duckMotor.setPower(-0.7);
-            sleep(3000);
-            duckMotor.setPower(0);
+        duckMotor.setPower(-0.7);
+        sleep(3000);
+        duckMotor.setPower(0);
 
-            Trajectory left = drive.trajectoryBuilder(duck.end())
-                    .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(110)))
-                    .build();
-            drive.followTrajectory(left);
+        Trajectory left = drive.trajectoryBuilder(duck.end())
+                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(115)))
+                .build();
+        drive.followTrajectory(left);
 
-            frontLeftMotor.setPower(1);
-            frontRightMotor.setPower(1);
-            rearLeftMotor.setPower(1);
-            rearRightMotor.setPower(1);
-            sleep(2000);
-            frontLeftMotor.setPower(0);
-            frontRightMotor.setPower(0);
-            rearLeftMotor.setPower(0);
+        frontLeftMotor.setPower(1);
+        frontRightMotor.setPower(1);
+        rearLeftMotor.setPower(1);
+        rearRightMotor.setPower(1);
+        sleep(2000);
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        rearLeftMotor.setPower(0);
         rearRightMotor.setPower(0);
+
 
 
 

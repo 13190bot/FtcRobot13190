@@ -100,7 +100,7 @@ public class CameraShiphubDuckPark extends LinearOpMode {
                 directionServo.setPosition(0.38);
                 targetPosition = 2550;
                 shipHub = drive.trajectoryBuilder(startPose)
-                        .lineToLinearHeading(new Pose2d(55, -4, Math.toRadians(-200)))
+                        .lineToLinearHeading(new Pose2d(55, -4, Math.toRadians(-210)))
                         .build();
                 break;
             case 2:
@@ -156,7 +156,7 @@ public class CameraShiphubDuckPark extends LinearOpMode {
         armRotationMotor.setPower(0);
 
         Trajectory duck = drive.trajectoryBuilder(shipHub.end())
-                .lineToLinearHeading(new Pose2d(-10, 34, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-10, 33, Math.toRadians(-90)))
                 .build();
         drive.followTrajectory(duck);
 
@@ -167,27 +167,31 @@ public class CameraShiphubDuckPark extends LinearOpMode {
 
 
         Trajectory left = drive.trajectoryBuilder(duck.end())
-                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(-75)))
+                .lineToLinearHeading(new Pose2d(10, 0, Math.toRadians(-130)))
                 .build();
         //drive.followTrajectory(left);
 
         //rotyate
-        /*
+
         frontLeftMotor.setPower(-1);
         frontRightMotor.setPower(1);
         rearLeftMotor.setPower(-1);
         rearRightMotor.setPower(1);
         if(level == 1) sleep(150);
         else if(level == 2) sleep(140);
-        else sleep(140);
-         */
+        else sleep(137);
+
+
+        /*
         frontLeftMotor.setPower(-1);
         frontRightMotor.setPower(1);
         rearLeftMotor.setPower(-1);
         rearRightMotor.setPower(1);
+        */
+
 
         Trajectory left2 = drive.trajectoryBuilder(duck.end())
-                .strafeLeft(15)
+                .strafeLeft(29)
                 .build();
         drive.followTrajectory(left2);
 
