@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.AutoRegionalsTesting;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
+@Disabled
 public class CameraAutoTesting extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/vision/customBox.tflite";
