@@ -40,6 +40,8 @@ public class ShiphubParkBlue extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
 
+        waitForStart();
+
         Trajectory shipHub = drive.trajectoryBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(-28, 0, Math.toRadians(0)))
                 .build();
